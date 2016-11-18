@@ -99,5 +99,9 @@ describe('TodoAPI', () => {
       var filteredTodos = TodoAPI.filterTodos(todos, true, 'shave');
       expect(filteredTodos.length).toBe(1);
     });
+
+    it('should filter new todos with old', () => {
+      todos.push({})
+    });
   });
 });
