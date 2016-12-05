@@ -7,6 +7,8 @@ var $ = require('jquery');
 var TodoApp = require('TodoApp');
 var {AddTodo} = require('AddTodo');
 
+import * as actions from 'actions';
+
 describe('AddTodo', () => {
   it('should exist', () => {
     expect(AddTodo).toExist();
@@ -14,15 +16,23 @@ describe('AddTodo', () => {
 
   it('should dispatch ADD_TODO with valid new todo input', () => {
     var todoText = 'Shave the whales';
-    var action = {
-      type: 'ADD_TODO',
-      text: todoText
-    };
+    var action = actions.startAddTodo(todoText);
+    // {
+    //   type: 'ADD_TODO',
+    //   todo: {
+    //     id: '123',
+    //     text: 'Something to do',
+    //     completed: false,
+    //     createdAt: 89734254
+    //   }
+    // };
     var spy = expect.createSpy();;
     var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(addTodo));
     addTodo.refs.newTodo.value = todoText;
-    TestUtils.Simulate.submit($el.find('form')[0]);
+    TestUtils
+      .Simulate
+      .submit($el.find('form')[0]);
     expect(spy).toHaveBeenCalledWith(action);
   });
 
@@ -31,7 +41,9 @@ describe('AddTodo', () => {
     var addTodo = TestUtils.renderIntoDocument(<AddTodo dispatch={spy}/>);
     var $el = $(ReactDOM.findDOMNode(addTodo));
     addTodo.refs.newTodo.value = '';
-    TestUtils.Simulate.submit($el.find('form')[0]);
+    TestUtils
+      .Simulate
+      .submit($el.find('form')[0]);
     expect(spy).toNotHaveBeenCalled();
   });
 });
